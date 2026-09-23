@@ -1,0 +1,304 @@
+<?php
+/**
+ * Szablon oed – Joomla 6 + Tailwind CSS
+ *
+ * Mapa pozycji modułów:
+ *   top1            → top1           (pasek nad nagłówkiem, 100%)
+ *   hleft           → header-left    (lewa część nagłówka, 6/12)
+ *   hdr             → header-center  (środek nagłówka, 3/12)
+ *   hright          → header-right   (prawa część nagłówka, 3/12)
+ *   Menu            → menu           (główna nawigacja)
+ *   stopka          → prefooter      (pasek nad stopką, 100%)
+ *   LeftFooterArea  → footer-left    (lewa kolumna stopki)
+ *   CenterFooterArea→ footer-middle  (środkowa kolumna stopki)
+ *   RightFooterArea → footer-right   (prawa kolumna stopki)
+ */
+
+defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+
+$app          = Factory::getApplication();
+$template     = $app->getTemplate(true);
+$subtemplate  = $template->params->get('subtemplate', 'default');
+
+$wa           = $app->getDocument()->getWebAssetManager();
+$templatePath = 'templates/' . $this->template;
+$wa->useStyle('fontawesome');
+?>
+<!DOCTYPE html>
+<html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <jdoc:include type="metas" />
+    <meta name="csrf-token" content="<?php echo \Joomla\CMS\Session\Session::getFormToken(); ?>">
+
+    <?php if ($subtemplate === 'lp'): ?>
+        <!-- === NEXT.JS – LANDING PAGE === -->
+        <!-- Preload Font Awesome webfonts – redukcja CLS -->
+        <link rel="preload" href="<?php echo $this->baseurl; ?>/media/vendor/fontawesome-free/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="<?php echo $this->baseurl; ?>/media/vendor/fontawesome-free/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+        <style>
+          @font-face { font-family: 'Font Awesome 6 Brands'; font-display: optional; }
+          @font-face { font-family: 'Font Awesome 6 Free';   font-display: optional; }
+          @font-face { font-family: 'Font Awesome 5 Brands'; font-display: optional; }
+          @font-face { font-family: 'Font Awesome 5 Free';   font-display: optional; }
+        </style>
+        {{ next:hdr }}
+    <?php else: ?>
+    <jdoc:include type="styles" />
+    <jdoc:include type="scripts" />
+        <?php
+        $wa->registerAndUseStyle('tailwind-base', $templatePath . '/assets/css/tailwind-base.css');
+        $wa->registerAndUseStyle('template-css',   $templatePath . '/template.min.css');
+        $wa->registerAndUseStyle('menu-css',     $templatePath . '/menu.min.css');
+        $wa->registerAndUseStyle('footer-css',   $templatePath . '/footer.min.css');
+
+        // Custom CSS z parametrów szablonu
+        $customCss = $this->params->get('custom_css');
+        if (!empty($customCss)) {
+            $wa->addInlineStyle($customCss);
+        }
+        ?>
+        <!-- Preload Font Awesome webfonts – redukcja CLS -->
+        <link rel="preload" href="<?php echo $this->baseurl; ?>/media/vendor/fontawesome-free/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="<?php echo $this->baseurl; ?>/media/vendor/fontawesome-free/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+        <style>
+          @font-face { font-family: 'Font Awesome 6 Brands'; font-display: optional; }
+          @font-face { font-family: 'Font Awesome 6 Free';   font-display: optional; }
+          @font-face { font-family: 'Font Awesome 5 Brands'; font-display: optional; }
+          @font-face { font-family: 'Font Awesome 5 Free';   font-display: optional; }
+        </style>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <?php endif; ?>
+</head>
+
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+<?php if ($subtemplate === 'lp'): ?>
+    
+    {{ next:content }}
+    {{ next:script }}
+
+
+<?php else: ?>
+<!-- ══════════════════════════════════════════════════════════
+     TRYB KLASYCZNY
+     ══════════════════════════════════════════════════════════ -->
+
+<!-- ── TOP1: pasek nad nagłówkiem (100%) ── -->
+<?php if ($this->countModules('top1')): ?>
+<div id="top1-bar" class="w-full">
+    <div class="container mx-auto px-4 flex items-center justify-between">
+        <jdoc:include type="modules" name="top1" style="none" />
+    </div>
+</div>
+<?php endif; ?>
+
+<!-- ── HEADER: hleft (6/12) + hdr (3/12) + hright (3/12) ── -->
+<?php if ($this->countModules('header-left') || $this->countModules('header-right')): ?>
+<header id="header" class="w-full">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap items-center">
+
+            <!-- header-left (dawniej: hleft) – 50% -->
+            <div class="w-full md:w-1/2 py-2">
+                <?php if ($this->countModules('header-left')): ?>
+                    <jdoc:include type="modules" name="header-left" style="none" />
+                <?php endif; ?>
+            </div>
+
+            <!-- header-center (dawniej: hdr) 
+            <div class="w-full md:w-1/4 py-2">
+                <?php if ($this->countModules('header-center')): ?>
+                    <jdoc:include type="modules" name="header-center" style="none" />
+                <?php endif; ?>
+            </div> -->
+
+            <!-- header-right (dawniej: hright) – 50% -->
+            <div class="w-full md:w-1/2 py-2">
+                <?php if ($this->countModules('header-right')): ?>
+                    <jdoc:include type="modules" name="header-right" style="none" />
+                <?php endif; ?>
+            </div>
+
+        </div>
+    </div>
+</header>
+<?php endif; ?>
+
+<!-- ── MENU: główna nawigacja (dawniej: Menu) ── -->
+<?php if ($this->countModules('menu')): ?>
+<nav id="navbar" class="bg-gray-500 text-white shadow-lg">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-3">
+
+            <!-- Logo / nazwa strony -->
+
+            <!-- Menu desktopowe -->
+            <div class="hidden md:flex items-center space-x-6">
+                <jdoc:include type="modules" name="menu" style="none" />
+            </div>
+
+            <!-- Przycisk mobilny -->
+            <button id="mobile-menu-button" class="md:hidden text-white" aria-label="Menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Menu mobilne -->
+        <div id="mobile-menu" class="md:hidden hidden py-4">
+            <jdoc:include type="modules" name="menu" style="none" />
+        </div>
+    </div>
+</nav>
+<?php endif; ?>
+
+<!-- ── MAIN CONTENT AREA ── -->
+<div id="content-wrapper" class="flex-grow">
+    <div class="container mx-auto px-4 py-8">
+
+        <!-- Komunikaty systemowe -->
+        <jdoc:include type="message" />
+
+        <div class="flex flex-col lg:flex-row gap-8">
+
+            <!-- ── MAIN CONTENT ── -->
+            <main id="main-content" class="<?php echo $this->countModules('sidebar') ? 'lg:w-2/3' : 'w-full'; ?>">
+
+                <!-- Breadcrumbs -->
+                <?php if ($this->countModules('breadcrumbs')): ?>
+                <div class="mb-6 overflow-hidden">
+                    <div class="flex flex-nowrap items-center whitespace-nowrap overflow-x-auto">
+                        <jdoc:include type="modules" name="breadcrumbs" style="xhtml" />
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <!-- Component-top -->
+                <?php if ($this->countModules('component-top')): ?>
+                <div class="mb-6">
+                    <jdoc:include type="modules" name="component-top" style="none" />
+                </div>
+                <?php endif; ?>
+
+                <!-- Treść główna (component) -->
+                <div class="space-y-8 prose max-w-none">
+                    <jdoc:include type="component" />
+                </div>
+
+                <!-- Component-bottom -->
+                <?php if ($this->countModules('component-bottom')): ?>
+                <div class="mt-6">
+                    <jdoc:include type="modules" name="component-bottom" style="none" />
+                </div>
+                <?php endif; ?>
+
+            </main>
+
+            <!-- ── SIDEBAR (opcjonalny) ── -->
+            <?php if ($this->countModules('sidebar')): ?>
+            <aside id="sidebar" class="lg:w-1/3">
+                <div class="bg-white rounded-lg shadow-md p-6 space-y-6 border border-blue-600">
+                    <jdoc:include type="modules" name="sidebar" style="none" />
+                </div>
+            </aside>
+            <?php endif; ?>
+
+        </div>
+    </div>
+</div>
+
+<!-- ── PREFOOTER: pasek nad stopką, 100% (dawniej: stopka) ── -->
+<?php if ($this->countModules('prefooter')): ?>
+<div id="prefooter" class="w-full py-6">
+    <div class="container mx-auto px-4">
+        <jdoc:include type="modules" name="prefooter" style="none" />
+    </div>
+</div>
+<?php endif; ?>
+
+<?php endif; // end classic mode ?>
+
+<!-- ── FOOTER: 3 kolumny + copyright ── -->
+<footer id="footer" class="bg-blue-900 text-white mt-auto">
+    <div class="container mx-auto px-4 py-8">
+
+        <?php if ($this->countModules('footer-left') || $this->countModules('footer-middle') || $this->countModules('footer-right')): ?>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+
+            <!-- footer-left (dawniej: LeftFooterArea) -->
+            <div>
+                <?php if ($this->countModules('footer-left')): ?>
+                    <jdoc:include type="modules" name="footer-left" style="none" />
+                <?php endif; ?>
+            </div>
+
+            <!-- footer-middle (dawniej: CenterFooterArea) -->
+            <div>
+                <?php if ($this->countModules('footer-middle')): ?>
+                    <jdoc:include type="modules" name="footer-middle" style="none" />
+                <?php endif; ?>
+            </div>
+
+            <!-- footer-right (dawniej: RightFooterArea) -->
+            <div>
+                <?php if ($this->countModules('footer-right')): ?>
+                    <jdoc:include type="modules" name="footer-right" style="none" />
+                <?php endif; ?>
+            </div>
+
+        </div>
+        <?php endif; ?>
+
+        <!-- Copyright -->
+        <div class="border-t border-blue-800 pt-6 text-center text-blue-300">
+            <?php if ($this->countModules('footer-bottom')): ?>
+                <jdoc:include type="modules" name="footer-bottom" style="none" />
+            <?php endif; ?>
+
+            <?php if ($this->params->get('enable_Copyright_Text', 1)): ?>
+            <p class="text-sm mt-2">
+                <?php
+                $copyText = $this->params->get('Copyright_Text', 'uczelnia@pansjar.edu.pl');
+                $copyUrl  = $this->params->get('Copyright_Url', $app->get('live_site'));
+                ?>
+                <a href="<?php echo htmlspecialchars($copyUrl); ?>" class="hover:text-white transition-colors">
+                    <?php echo htmlspecialchars($copyText); ?>
+                </a>
+            </p>
+            <?php endif; ?>
+
+            <?php if ($this->params->get('enable_Designed_By', 1)): ?>
+            <p class="text-xs mt-1 text-blue-400">projekt: Jerzy Wawro</p>
+            <?php endif; ?>
+        </div>
+
+    </div>
+</footer>
+
+<?php if ($subtemplate != 'lp'): ?>
+<!-- JavaScript: mobilne menu -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var btn  = document.getElementById('mobile-menu-button');
+    var menu = document.getElementById('mobile-menu');
+    if (btn && menu) {
+        btn.addEventListener('click', function () {
+            menu.classList.toggle('hidden');
+        });
+    }
+});
+</script>
+
+<jdoc:include type="modules" name="debug" style="none" />
+
+<?php endif; // end classic mode ?>
+
+</body>
+</html>

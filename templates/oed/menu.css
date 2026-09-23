@@ -1,0 +1,229 @@
+/* ==========================================================================
+   MENU GŁÓWNE (Poziome, rozwijane)
+   Obsługuje tryb klasyczny (#navbar) oraz Landing Page (#joomla-menu-placeholder)
+   ========================================================================== */
+
+#navbar,
+#joomla-menu-placeholder {
+    background-color: #202f4b!important; /* Gwarantowane czarne tło */
+}
+
+/* Ukrycie menu zastępczego (React) na rzecz dynamicznego z Joomli */
+#joomla-menu-placeholder:not(:empty) + .joomla-hide-fallback {
+    display: none !important;
+}
+
+#navbar .mod-menu > ul, #navbar .mod-menu, #navbar .mod-list, #navbar .nav,
+#joomla-menu-placeholder .mod-menu > ul, #joomla-menu-placeholder .mod-menu, #joomla-menu-placeholder .mod-list, #joomla-menu-placeholder .nav {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Pozycjonowanie li rodzica podmenu */
+#navbar .mod-menu li, #navbar .mod-list li, #navbar .nav li,
+#joomla-menu-placeholder .mod-menu li, #joomla-menu-placeholder .mod-list li, #joomla-menu-placeholder .nav li {
+    position: relative;
+    margin: 0;
+}
+
+/* Ukrywanie podmenu (poziom 2 i kolejne) */
+#navbar .mod-menu li ul, #navbar .mod-list li ul, #navbar .nav li ul,
+#joomla-menu-placeholder .mod-menu li ul, #joomla-menu-placeholder .mod-list li ul, #joomla-menu-placeholder .nav li ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #1c2024;
+    min-width: 200px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 0.375rem;
+    padding: 0.5rem 0;
+    z-index: 50;
+    flex-direction: column !important;
+    gap: 0 !important;
+    list-style: none;
+}
+
+/* Pokaż podmenu po najechaniu na rodzica */
+#navbar .mod-menu li:hover > ul, #navbar .mod-menu li:focus-within > ul,
+#navbar .mod-list li:hover > ul, #navbar .mod-list li:focus-within > ul,
+#navbar .nav li:hover > ul, #navbar .nav li:focus-within > ul,
+#joomla-menu-placeholder .mod-menu li:hover > ul, #joomla-menu-placeholder .mod-menu li:focus-within > ul,
+#joomla-menu-placeholder .mod-list li:hover > ul, #joomla-menu-placeholder .mod-list li:focus-within > ul,
+#joomla-menu-placeholder .nav li:hover > ul, #joomla-menu-placeholder .nav li:focus-within > ul {
+    display: flex;
+}
+
+/* Wygląd linków głównych */
+#navbar .mod-menu a, #navbar .mod-list a, #navbar .nav a,
+#joomla-menu-placeholder .mod-menu a, #joomla-menu-placeholder .mod-list a, #joomla-menu-placeholder .nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 0;
+    transition: color 0.2s;
+    margin-right: 0.5rem;
+}
+
+#navbar .mod-menu a:hover, #navbar .mod-list a:hover, #navbar .nav a:hover,
+#joomla-menu-placeholder .mod-menu a:hover, #joomla-menu-placeholder .mod-list a:hover, #joomla-menu-placeholder .nav a:hover {
+    color: #f2bc5a;
+}
+
+/* Wygląd linków w podmenu */
+#navbar .mod-menu li ul a, #navbar .mod-list li ul a, #navbar .nav li ul a,
+#joomla-menu-placeholder .mod-menu li ul a, #joomla-menu-placeholder .mod-list li ul a, #joomla-menu-placeholder .nav li ul a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: white;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+}
+
+#navbar .mod-menu li ul a:hover, #navbar .mod-list li ul a:hover, #navbar .nav li ul a:hover,
+#joomla-menu-placeholder .mod-menu li ul a:hover, #joomla-menu-placeholder .mod-list li ul a:hover, #joomla-menu-placeholder .nav li ul a:hover {
+    background-color: #bd7405;
+    color: white;
+}
+
+/* ==========================================================================
+   WERSJA MOBILNA MENU (rozwijane pionowo po kliknięciu hamburgera)
+   ========================================================================== */
+@media (max-width: 767px) {
+    #navbar .mod-menu > ul, #navbar .mod-menu, #navbar .mod-list, #navbar .nav,
+    #joomla-menu-placeholder .mod-menu > ul, #joomla-menu-placeholder .mod-menu, #joomla-menu-placeholder .mod-list, #joomla-menu-placeholder .nav {
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+
+    /* === bloki związane z obsługą przesunięcia poza typescript === */
+    /* #navbar .mod-menu > ul, #navbar .mod-menu, #navbar .mod-list, #navbar .nav,
+    #joomla-menu-placeholder .mod-menu > ul, #joomla-menu-placeholder .mod-menu, #joomla-menu-placeholder .mod-list, #joomla-menu-placeholder .nav {
+        display: none !important;
+    } */
+    /* #navbar .mod-menu.show > ul, #navbar .mod-menu.show, #navbar .mod-list.show, #navbar .nav.show,
+    #joomla-menu-placeholder .mod-menu.show > ul, #joomla-menu-placeholder .mod-menu.show, #joomla-menu-placeholder .mod-list.show, #joomla-menu-placeholder .nav.show {
+        display: flex !important;
+    } */
+
+
+    /* Klasa dodawana przez JS hamburgera po kliknięciu — dostosuj nazwę do tego, czego faktycznie używa Twój komponent (Bootstrap zwykle: .show, czasem .is-open / .active) */
+    #navbar .mod-menu.show > ul, #navbar .mod-menu.show, #navbar .mod-list.show, #navbar .nav.show,
+    #joomla-menu-placeholder .mod-menu.show > ul, #joomla-menu-placeholder .mod-menu.show, #joomla-menu-placeholder .mod-list.show, #joomla-menu-placeholder .nav.show {
+        display: flex !important;
+    }
+
+    /* Podmenu (poziom 2+) w trybie mobilnym nie powinno być position:absolute,
+       tylko rozwijać się w naturalnym przepływie pod rodzicem */
+    #navbar .mod-menu li ul, #navbar .mod-list li ul, #navbar .nav li ul,
+    #joomla-menu-placeholder .mod-menu li ul, #joomla-menu-placeholder .mod-list li ul, #joomla-menu-placeholder .nav li ul {
+        position: static !important;
+        box-shadow: none;
+    }
+}
+
+/* ============================================================
+   UKRYCIE TYTUŁU MENU PRZY ZACHOWANIU IKONY
+   ============================================================ */
+
+/* Dla elementu menu z klasą fa-house - ukrycie tekstu */
+#navbar .mod-menu a.fa-house,
+#navbar .mod-list a.fa-house,
+#navbar .nav a.fa-house {
+    font-size: 0 !important; /* Ukrycie tekstu */
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+}
+
+/* Przywrócenie rozmiaru ikony - Font Awesome 6 */
+#navbar .mod-menu a.fa-house::before,
+#navbar .mod-list a.fa-house::before,
+#navbar .nav a.fa-house::before {
+    font-size: 1.25rem !important; /* Rozmiar ikony */
+    line-height: 1 !important;
+}
+
+/* Jeśli używasz Font Awesome 5 */
+#navbar .mod-menu a.fa-house .fas,
+#navbar .mod-menu a.fa-house .fa-solid,
+#navbar .mod-list a.fa-house .fas,
+#navbar .mod-list a.fa-house .fa-solid,
+#navbar .nav a.fa-house .fas,
+#navbar .nav a.fa-house .fa-solid {
+    font-size: 1.25rem !important;
+}
+
+/* Alternatywnie - ukrycie tekstu przez przesunięcie */
+#navbar .mod-menu a.fa-house {
+    text-indent: -9999px !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+}
+
+/* Przywrócenie ikony (działa z text-indent) */
+#navbar .mod-menu a.fa-house::before {
+    text-indent: 0 !important;
+    display: inline-block !important;
+}
+
+/* ============================================================
+   DODATKOWO - ZABEZPIECZENIE DLA RÓŻNYCH WERSJI
+   ============================================================ */
+
+/* Dla Joomla - jeśli tytuł jest w osobnym span */
+#navbar .mod-menu a.fa-house span,
+#navbar .mod-list a.fa-house span,
+#navbar .nav a.fa-house span {
+    display: none !important;
+}
+
+/* Dla podmenu - jeśli element ma dzieci */
+#navbar .mod-menu li.fa-house > a,
+#navbar .mod-list li.fa-house > a,
+#navbar .nav li.fa-house > a {
+    font-size: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+}
+
+#navbar .mod-menu li.fa-house > a::before,
+#navbar .mod-list li.fa-house > a::before,
+#navbar .nav li.fa-house > a::before {
+    font-size: 1.25rem !important;
+}
+
+/* ============================================================
+   DODATKOWA OPCJA - SPECJALNA KLASA
+   ============================================================ */
+
+/* Jeśli chcesz użyć własnej klasy zamiast fa-house */
+#navbar .mod-menu a.menu-home-icon,
+#navbar .mod-list a.menu-home-icon,
+#navbar .nav a.menu-home-icon {
+    font-size: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+}
+
+#navbar .mod-menu a.menu-home-icon .fa-house,
+#navbar .mod-menu a.menu-home-icon .fas,
+#navbar .mod-menu a.menu-home-icon .fa-solid {
+    font-size: 1.25rem !important;
+}

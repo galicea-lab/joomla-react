@@ -1,0 +1,2 @@
+echo "tree"
+npm fund

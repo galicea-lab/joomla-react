@@ -1,0 +1,47 @@
+
+/* === STOPKA === */
+#footer {
+    background-color: #202f4b!important; /* granatowe tło */
+    color: #ffffff !important;
+    padding-top:5px!important;
+}
+
+#footer a {
+    color: #f2bc5a !important; /* Złoty kolor linków dla kontrastu */
+}
+
+#footer a:hover {
+    color: #ffffff !important;
+    text-decoration: underline !important;
+}
+
+/* Linki w stopce - wyraźne */
+#footer .mod-menu a,
+#footer .mod-list a,
+#footer .nav a {
+    color: #f2bc5a !important;
+}
+
+#footer .mod-menu a:hover,
+#footer .mod-list a:hover,
+#footer .nav a:hover {
+    color: #ffffff !important;
+}
+
+/* Tekst w stopce - biały dla kontrastu */
+#footer p,
+#footer div,
+#footer span,
+#footer li {
+    color: #ffffff !important;
+}
+
+/* Muted text w stopce */
+#footer .text-blue-300,
+#footer .text-blue-400 {
+    color: #94a3b8 !important; /* Jaśniejszy szary zamiast niebieskiego */
+}
+
+#footer .border-blue-800 {
+    border-color: #2d3748 !important;
+}

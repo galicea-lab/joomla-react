@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="template" client="site"  method="upgrade">
+    <name>oed</name>
+    <version>0.0.1</version>
+    <creationDate>2026-08-02</creationDate>
+    <author>Jerzy Wawro</author>
+    <authorEmail>jurek@tenar.pl</authorEmail>
+    <copyright>Copyright JW</copyright>
+    <license>GNU General Public License version 2 or later</license>
+    <description>PWSTE International – Joomla 5 (Tailwind CSS)</description>
+
+    <layouts>
+        <layout label="Default" value="">default</layout>
+        <layout label="Landing Page (lp)" value="lp">lp</layout>
+    </layouts>
+
+    <files>
+        <folder>assets</folder>
+        <folder>html</folder>
+        <folder>language</folder>
+        <filename>index.php</filename>
+        <filename>templateDetails.xml</filename>
+        <filename>accessibility-core.js</filename>
+        <filename>cookie-consent.js</filename>
+        <filename>footer.css</filename>
+        <filename>footer.min.css</filename>
+        <filename>menu.css</filename>
+        <filename>menu.min.css</filename>
+        <filename>template.css</filename>
+        <filename>template.min.css</filename>
+    </files>
+
+    <!--
+         POZYCJE MODUŁÓW – J5
+    -->
+    <positions>
+        <!-- HEADER -->
+        <position>top1</position>
+        <position>lang</position>
+        <position>header-left</position>
+        <position>header-center</position>
+        <position>header-right</position>
+        <position>menu</position>
+        <!-- CONTENT -->
+        <position>breadcrumbs</position>
+        <position>component-top</position>
+        <position>component-bottom</position>
+        <position>sidebar</position>
+        <!-- PRE-FOOTER -->
+        <position>prefooter</position>
+        <!-- FOOTER -->
+        <position>footer-left</position>
+        <position>footer-middle</position>
+        <position>footer-right</position>
+        <position>footer-bottom</position>
+        <!-- SYSTEM -->
+        <position>debug</position>
+    </positions>
+
+    <languages folder="language">
+        <language tag="en-GB">en-GB/tpl_oed.ini</language>
+        <language tag="en-GB">en-GB/tpl_oed.sys.ini</language>
+        <language tag="pl-PL">pl-PL/tpl_oed.ini</language>
+        <language tag="pl-PL">pl-PL/tpl_oed.sys.ini</language>
+    </languages>
+
+    <config>
+        <fields name="params">
+            <fieldset name="advanced" label="Advanced" description="Zaawansowane ustawienia szablonu">
+                <field
+                    name="subtemplate"
+                    type="radio"
+                    label="Subtemplate"
+                    description="Wybierz subszablon (wpływa na layout strony)"
+                    default="default"
+                >
+                    <option value="default">Default</option>
+                    <option value="lp">Landing Page (lp)</option>
+                </field>
+            </fieldset>
+
+            <fieldset name="style_options" label="Style Options">
+                <!-- Style pozycji – jak w starym szablonie -->
+                <field name="top1" type="list" default="block" label="top1 Position Style">
+                    <option value="block">TT Default</option>
+                    <option value="none">None</option>
+                </field>
+                <field name="header-left" type="list" default="block" label="header-left Position Style">
+                    <option value="block">TT Default</option>
+                    <option value="none">None</option>
+                </field>
+                <field name="header-center" type="list" default="block" label="header-center Position Style">
+                    <option value="block">TT Default</option>
+                    <option value="none">None</option>
+                </field>
+                <field name="header-right" type="list" default="block" label="header-right Position Style">
+                    <option value="block">TT Default</option>
+                    <option value="none">None</option>
+                </field>
+                <field name="prefooter" type="list" default="block" label="prefooter Position Style">
+                    <option value="block">TT Default</option>
+                    <option value="none">None</option>
+                </field>
+                <field name="footer-left" type="list" default="block" label="footer-left Position Style">
+                    <option value="block">TT Default</option>
+                    <option value="none">None</option>
+                </field>
+                <field name="footer-middle" type="list" default="block" label="footer-middle Position Style">
+                    <option value="block">TT Default</option>
+                    <option value="none">None</option>
+                </field>
+                <field name="footer-right" type="list" default="block" label="footer-right Position Style">
+                    <option value="block">TT Default</option>
+                    <option value="none">None</option>
+                </field>
+
+                <field name="lang" type="list" default="block" label="lang Position Style">
+                    <option value="block">TT Default</option>
+                    <option value="none">None</option>
+                </field>
+                <field name="lang1" type="list" default="block" label="lang1 Position Style">
+                    <option value="block">TT Default</option>
+                    <option value="none">None</option>
+                </field>
+            </fieldset>
+
+            <fieldset name="footer" label="Footer Options">
+                <field name="enable_Copyright_Text" type="radio" class="btn-group btn-group-yesno"
+                    default="1" label="Display Footer Copyright" description="Display Footer Copyright">
+                    <option value="1">Show</option>
+                    <option value="0">Hide</option>
+                </field>
+                <field name="Copyright_Text" type="textarea" default="[do uzupełnienia]"
+                    label="Footer Copyright Text" description="(C) Otwarta Edukacja" />
+                <field name="Copyright_Url" type="textarea" default=""
+                    label="Footer Copyright Url" description="#" />
+                <field name="enable_Designed_By" type="radio" class="btn-group btn-group-yesno"
+                    default="1" label="Display Footer Designed By" description="Display Footer Designed By">
+                    <option value="1">Show</option>
+                    <option value="0">Hide</option>
+                </field>
+            </fieldset>
+
+            <fieldset name="coloroptions" label="Color Options">
+                <field name="custom_css" type="textarea" default="" label="Custom CSS" description="Dodatkowy CSS" />
+            </fieldset>
+        </fields>
+    </config>
+</extension>
